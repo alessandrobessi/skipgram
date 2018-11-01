@@ -8,8 +8,8 @@ class DataReader:
 
     def __init__(self, input_file_name: str, min_count: int):
 
-        self.negatives = []
-        self.discards = []
+        self.negatives = list()
+        self.discards = list()
         self.negpos = 0
 
         self.word2id = dict()
@@ -47,12 +47,12 @@ class DataReader:
             wid += 1
         logging.info("Total embeddings: {}".format(len(self.word2id)))
 
-    def init_table_discards(self):
+    def init_table_discards(self) -> None:
         t = 0.0001
         f = np.array(list(self.word_frequency.values())) / self.token_count
         self.discards = np.sqrt(t / f) + (t / f)
 
-    def init_table_negatives(self):
+    def init_table_negatives(self) -> None:
         pow_frequency = np.array(list(self.word_frequency.values())) ** 0.5
         words_pow = sum(pow_frequency)
         ratio = pow_frequency / words_pow
@@ -62,7 +62,7 @@ class DataReader:
         self.negatives = np.array(self.negatives)
         np.random.shuffle(self.negatives)
 
-    def get_negatives(self, size: int) -> Union[List, np.array]:  # TODO check equality with target
+    def get_negatives(self, size: int) -> Union[List, np.array]:
         response = self.negatives[self.negpos:self.negpos + size]
         self.negpos = (self.negpos + size) % len(self.negatives)
         if len(response) != size:
