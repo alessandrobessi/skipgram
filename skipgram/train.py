@@ -18,7 +18,7 @@ class Word2VecTrainer:
                  emb_dimension: int = 100,
                  batch_size: int = 8,
                  window_size: int = 5,
-                 num_epochs: int = 3,
+                 num_epochs: int = 10,
                  initial_lr: float = 0.001,
                  min_count: int = 1):
 
